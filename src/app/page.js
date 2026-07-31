@@ -165,7 +165,7 @@ export default function Home() {
                   <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-2 drop-shadow-lg">
                     إسلام <span className="text-rose-300 font-light mx-2">&</span> تسنيم
                   </h1>
-                  <p className="text-white/80 tracking-widest text-sm uppercase">13 أغسطس 2026</p>
+                  <p className="text-white/80 tracking-widest text-sm uppercase">1 أغسطس 2026</p>
                 </motion.div>
 
                 <motion.div 
