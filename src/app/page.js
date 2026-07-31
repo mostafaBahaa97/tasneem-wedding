@@ -277,7 +277,7 @@ export default function Home() {
                       </motion.div>
                     </div>
                     
-                    <h3 className="text-3xl font-bold text-slate-800 mb-4">أنرتم فرحتنا!</h3>
+                    <h3 className="text-3xl font-bold text-slate-800 mb-4">شكرا يا {name}!</h3>
                     <p className="text-slate-600 text-lg leading-relaxed mb-8">
                       شكراً لكلماتك الرقيقة. تم حفظ رسالتك لتكون جزءاً من ذكرياتنا السعيدة في هذا اليوم.
                     </p>
