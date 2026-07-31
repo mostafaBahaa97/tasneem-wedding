@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Send, Sparkles, Quote, PenLine, Feather } from "lucide-react";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBZ5qcq_aJOJZkdgDVIv6RKhaOygEyoN1dB4y7hQ5-ctFBgoImh__u5fOp0xQTrdq4UA/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVBOVyJAsvczQ02uKMHqeMY52EPcqEDV2NIfSRA7Fgji7z65Gvrf_xQsSycz2lm2gv/exec";
 
 export default function Home() {
   const [name, setName] = useState("");
