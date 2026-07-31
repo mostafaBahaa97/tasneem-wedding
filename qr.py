@@ -1,7 +1,7 @@
 import qrcode
 
 # 1. الرابط أو النص اللي عايز تحوله لـ QR Code
-url = "https://gallery-republic.vercel.app/"
+url = "https://tasneem-wedding.vercel.app/"
 
 # 2. إعدادات الـ QR Code
 qr = qrcode.QRCode(
@@ -20,6 +20,6 @@ qr.make(fit=True)
 img = qr.make_image(fill_color="black", back_color="white")
 
 # 4. حفظ الصورة بجودة عالية
-img.save("gallery_qrcode.png")
+img.save("tasneem_wedding_qrcode.png")
 
-print("تم إنشاء الـ QR Code بنجاح وحفظه باسم gallery_qrcode.png")
+print("تم إنشاء الـ QR Code بنجاح وحفظه باسم tasneem_wedding_qrcode.png")

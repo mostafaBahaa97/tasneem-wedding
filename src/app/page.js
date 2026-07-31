@@ -9,11 +9,12 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVBOVyJAsvczQ02uKMH
 export default function Home() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+  const [submittedName, setSubmittedName] = useState(""); // متغير لحفظ اسم المرسل لصفحة الشكر
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState("form");
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
-  // التحكم في شاشة التحميل (3 ثواني بالظبط)
+  // التحكم في شاشة التحميل (3 ثواني)
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLoadingScreen(false);
@@ -34,6 +35,7 @@ export default function Home() {
         body: JSON.stringify({ name, message }),
       });
 
+      setSubmittedName(name); // حفظ الاسم هنا قبل تفريغ الحقل
       setStep("thank-you");
       setName("");
       setMessage("");
@@ -70,10 +72,10 @@ export default function Home() {
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#faf9f8]"
           >
             <div className="flex flex-col items-center">
-              {/* أنيميشن القلبين اللي بيتقابلوا */}
+              {/* أنيميشن القلبين */}
               <div className="relative w-48 h-16 mb-4">
                 
-                {/* قلب العريس (بيبدأ من الشمال لليمين) */}
+                {/* قلب العريس */}
                 <motion.div
                   initial={{ left: "0%", opacity: 0 }}
                   animate={{ left: "50%", opacity: 1 }}
@@ -83,7 +85,7 @@ export default function Home() {
                   <Heart className="w-10 h-10 text-slate-800" />
                 </motion.div>
 
-                {/* القلب المندمج في النص (بيظهر لما يتقابلوا) */}
+                {/* القلب المندمج */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center">
                   <motion.div
                     initial={{ scale: 0, opacity: 0 }}
@@ -94,7 +96,7 @@ export default function Home() {
                   </motion.div>
                 </div>
 
-                {/* قلب العروسة (بيبدأ من اليمين للشمال) */}
+                {/* قلب العروسة */}
                 <motion.div
                   initial={{ left: "100%", opacity: 0 }}
                   animate={{ left: "50%", opacity: 1 }}
@@ -106,7 +108,7 @@ export default function Home() {
                 
               </div>
 
-              {/* خط التحميل اللي بيكمل من الناحيتين */}
+              {/* خط التحميل */}
               <div className="w-48 h-1 bg-slate-200 rounded-full relative overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
@@ -145,7 +147,7 @@ export default function Home() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-rose-100 rounded-full blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-slate-100 rounded-full blur-3xl opacity-50 translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-            {/* القسم الأيمن: الصورة والآية (Visuals) */}
+            {/* القسم الأيمن: الصورة والآية */}
             <div className="md:w-5/12 relative min-h-[250px] md:min-h-[600px] flex items-center justify-center overflow-hidden">
               <div 
                 className="absolute inset-0 bg-cover bg-center"
@@ -174,7 +176,7 @@ export default function Home() {
                   transition={{ duration: 1, delay: 0.5 }}
                   className="mt-8 space-y-4"
                 >
-                  <Quote className="w-6 h-6  mx-auto transform rotate-180 mb-2" />
+                  <Quote className="w-6 h-6 mx-auto transform rotate-180 mb-2" />
                   <p className="text-lg md:text-xl leading-relaxed font-medium text-white/95 drop-shadow-md px-4">
                     "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
                   </p>
@@ -183,7 +185,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* القسم الأيسر: الفورم */}
+            {/* القسم الأيسر: الفورم والشكر */}
             <div className="md:w-7/12 p-8 md:p-12 lg:p-16 relative flex flex-col justify-center bg-white/80 backdrop-blur-sm">
               <AnimatePresence mode="wait">
                 {step === "form" ? (
@@ -257,6 +259,7 @@ export default function Home() {
                     </form>
                   </motion.div>
                 ) : (
+                  /* ================= شاشة الشكر المعدلة ================= */
                   <motion.div
                     key="success-view"
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -268,32 +271,26 @@ export default function Home() {
                       <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto">
                         <Sparkles className="w-10 h-10 text-green-500" />
                       </div>
-                      <motion.div 
-                        initial={{ scale: 0 }} 
-                        animate={{ scale: 1 }} 
-                        transition={{ delay: 0.3, type: "spring" }}
-                        className="absolute -bottom-2 -right-2 bg-white rounded-full p-1 shadow-sm"
-                      >
-                      </motion.div>
                     </div>
                     
-                    <h3 className="text-3xl font-bold text-slate-800 mb-4">شكرا يا {item.name}!</h3>
+                    {/* طباعة اسم المرسل هنا */}
+                    <h3 className="text-3xl font-bold text-slate-800 mb-4">
+                      شكراً يا <span className="text-rose-500">{submittedName}</span>!
+                    </h3>
                     <p className="text-slate-600 text-lg leading-relaxed mb-8">
                       شكراً لكلماتك الرقيقة. تم حفظ رسالتك لتكون جزءاً من ذكرياتنا السعيدة في هذا اليوم.
                     </p>
-                    <div className="flex justify-center bg-rose-50 px-6 py-3 rounded-full text-rose-600 font-medium text-sm">
-                    <p className="text-sm text-rose-600 font-medium px-2">عقبال عندكم، ودمتم في مسرات</p>
-                        <Heart className="w-6 h-6 text-rose-500 fill-rose-500" />
-
-
+                    <div className="flex items-center justify-center bg-rose-50 px-6 py-3 rounded-full text-rose-600 font-medium text-sm gap-2">
+                      <p className="text-sm text-rose-600 font-medium">عقبال عندكم، ودمتم في مسرات</p>
+                      <Heart className="w-5 h-5 text-rose-500 fill-rose-500" />
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              <div className="mt-12 pt-6 border-t border-slate-100 text-center flex  justify-center gap-2 text-xs text-slate-400 relative z-10">
+              <div className="mt-12 pt-6 border-t border-slate-100 text-center flex justify-center gap-2 text-xs text-slate-400 relative z-10">
                 <p className="flex items-center gap-1">
-                صُنع بحب بواسطه
+                  صُنع بحب بواسطة
                   <a 
                     href="https://mostafa-s-portfolio.vercel.app/" 
                     target="_blank" 
